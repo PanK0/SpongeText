@@ -45,8 +45,10 @@ def help_handler(bot, update):
     # Creating a handler-function for /start command
     logger.info("User {} started bot".format(update.effective_user["id"]))
     bot.send_message(chat_id=update.message.chat_id, text="heLlo! tHiS is the sPoNGeTEXtBot1!1!!" +
-                            "\n/sponge   : reply to a message with /sponge to spongify it!" +
-                            "\n/spongify : write /spongify before a message to spongify!")
+                            "\n/sponge    : reply to a message with /sponge to spongify it!" +
+                            "\n/spongify  : write /spongify before a message to spongify!" +
+                            "\n/spongehard: this + text = LOOOOL" +
+                            "\n/spongepic : picture")
 
 
 def sponge_handler(bot, update):
@@ -63,6 +65,7 @@ def sponge_handler(bot, update):
         logger.info(spongify(update.message.text[8:]))
         update.message.reply_text("Reply to a message writing /sponge to spongify that message!")
 
+
 def spongify_handler(bot, update):
     if (update.message.reply_to_message != None) :
         update.message.reply_text("Write /spongify before a message to spongify that message!")
@@ -71,8 +74,22 @@ def spongify_handler(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=spongify(update.message.text[10:]))
     #update.message.reply_text(spongify(update.message.text[10:]))
 
+
+def spongehard_handler(bot, update):
+    if (update.message.reply_to_message != None) :
+        update.message.reply_text("Write /spongify before a message to spongify that message!")
+        return
+    logger.info(update.message)
+    bot.sendPhoto(chat_id=update.message.chat_id, photo='https://i.kym-cdn.com/photos/images/facebook/001/255/479/85b.png')
+    bot.send_message(chat_id=update.message.chat_id, text=spongify(update.message.text[12:]))
+
+
+def spongepic_handler(bot, update):
+    bot.sendPhoto(chat_id=update.message.chat_id, photo='https://i.kym-cdn.com/photos/images/facebook/001/255/479/85b.png')
+
+
 def webapp_handler(bot, update):
-    update.message.text("Visit https://pank0.github.io/spongetext/ for the webapp")
+    bot.send_message(chat_id=update.message.chat_id, text="Visit https://pank0.github.io/spongetext/ for the webapp")
 
 if __name__ == '__main__':
     logger.info("Starting bot")
@@ -80,6 +97,8 @@ if __name__ == '__main__':
 
     updater.dispatcher.add_handler(CommandHandler("help", help_handler))
     updater.dispatcher.add_handler(CommandHandler("sponge", sponge_handler))
+    updater.dispatcher.add_handler(CommandHandler("spongehard", spongehard_handler))
+    updater.dispatcher.add_handler(CommandHandler("spongepic", spongepic_handler))
     updater.dispatcher.add_handler(CommandHandler("spongify", spongify_handler))
     updater.dispatcher.add_handler(CommandHandler("webapp", webapp_handler))
 
