@@ -41,32 +41,46 @@ def spongify(text) :
     return spongytext
 
 
-def start_handler(bot, update):
+def help_handler(bot, update):
     # Creating a handler-function for /start command
     logger.info("User {} started bot".format(update.effective_user["id"]))
-    update.message.reply_text("heLlo! tHiS is the sPoNGeTEXtBot1!1!!\nReply to a message writing /spongify to spongify that message!")
+    bot.send_message(chat_id=update.message.chat_id, text="heLlo! tHiS is the sPoNGeTEXtBot1!1!!" +
+                            "\n/sponge   : reply to a message with /sponge to spongify it!" +
+                            "\n/spongify : write /spongify before a message to spongify!")
 
 
-def spongy_handler(bot, update):
+def sponge_handler(bot, update):
     # Creating a handler-function for /spongify command
     logger.info(update.message)
-    if (update.message.reply_to_message != None) :
+    if (update.message.chat.type == "group") :
+        update.message.reply_text("Write /spongify before a message to spongify that message!")
+    elif (update.message.reply_to_message != None) :
         logger.info("User " + str(update.message.from_user.first_name) + " spongifyed " + str(update.message.reply_to_message.from_user.first_name))
         text = update.message.reply_to_message.text
         update.message.reply_text(spongify(text))
     else :
-        update.message.reply_text("Reply to a message writing /spongify to spongify that message!")
+        dict = update.message
+        logger.info(spongify(update.message.text[8:]))
+        update.message.reply_text("Reply to a message writing /sponge to spongify that message!")
 
+def spongify_handler(bot, update):
+    if (update.message.reply_to_message != None) :
+        update.message.reply_text("Write /spongify before a message to spongify that message!")
+        return
+    logger.info(update.message)
+    bot.send_message(chat_id=update.message.chat_id, text=spongify(update.message.text[10:]))
+    #update.message.reply_text(spongify(update.message.text[10:]))
 
 def webapp_handler(bot, update):
-    update.message.reply_text("Visit https://pank0.github.io/spongetext/ for the webapp")
+    update.message.text("Visit https://pank0.github.io/spongetext/ for the webapp")
 
 if __name__ == '__main__':
     logger.info("Starting bot")
     updater = Updater(TOKEN)
 
-    updater.dispatcher.add_handler(CommandHandler("start", start_handler))
-    updater.dispatcher.add_handler(CommandHandler("spongify", spongy_handler))
+    updater.dispatcher.add_handler(CommandHandler("help", help_handler))
+    updater.dispatcher.add_handler(CommandHandler("sponge", sponge_handler))
+    updater.dispatcher.add_handler(CommandHandler("spongify", spongify_handler))
     updater.dispatcher.add_handler(CommandHandler("webapp", webapp_handler))
 
     run(updater)
