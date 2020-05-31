@@ -49,7 +49,8 @@ def start_handler(bot, update):
 
 def spongy_handler(bot, update):
     # Creating a handler-function for /spongify command
-    if (update.message.reply_to_message) :
+    logger.info(update.message)
+    if (update.message.reply_to_message != None) :
         logger.info("User " + str(update.message.from_user.first_name) + " spongifyed " + str(update.message.reply_to_message.from_user.first_name))
         text = update.message.reply_to_message.text
         update.message.reply_text(spongify(text))
