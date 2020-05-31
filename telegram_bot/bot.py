@@ -45,10 +45,11 @@ def help_handler(bot, update):
     # Creating a handler-function for /start command
     logger.info("User {} started bot".format(update.effective_user["id"]))
     bot.send_message(chat_id=update.message.chat_id, text="heLlo! tHiS is the sPoNGeTEXtBot1!1!!" +
-                            "\n/sponge    : reply to a message with /sponge to spongify it!" +
-                            "\n/spongify  : write /spongify before a message to spongify!" +
+                            "\n/sponge    : reply to a message with this to spongify it!" +
+                            "\n/spongify  : write this before a message to spongify!" +
                             "\n/spongehard: this + text = LOOOOL" +
-                            "\n/spongepic : picture")
+                            "\n/spongepic : picture" +
+                            "\n/webapp    : web application")
 
 
 def sponge_handler(bot, update):
