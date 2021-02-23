@@ -1,2 +1,2 @@
 # spongetext
-wRiTe aS tHe Sp0NgE [HERE](https://pank0.github.io/spongetext/)
+wRiTe aS tHe Sp0NgE [HERE](https://spongee.herokuapp.com/)
